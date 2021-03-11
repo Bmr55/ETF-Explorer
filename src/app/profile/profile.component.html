@@ -1,0 +1,23 @@
+<mat-card>
+    <mat-card-title> {{profile.name || "Name"}} </mat-card-title>
+    <mat-divider></mat-divider>
+    <mat-card-content>
+        <mat-list>
+            <mat-list-item>
+                <h4>Age:</h4> &nbsp; <p>{{profile.age || "" }}</p>
+            </mat-list-item>
+            <mat-divider></mat-divider>
+            <mat-list-item>
+                <h4>Country:</h4> &nbsp; <p>{{profile.country || "" }}</p>
+            </mat-list-item>
+            <mat-divider></mat-divider>
+            <mat-list-item>
+                <h4>Risk Tolerance:</h4> &nbsp; <p>{{profile.risk || ""}}</p>
+            </mat-list-item>
+            <mat-divider></mat-divider>
+        </mat-list>
+    </mat-card-content>
+    <mat-card-footer>
+        <button mat-raised-button color=primary class="edit-profile-btn" (click)="editProfile()">Edit Profile</button>
+    </mat-card-footer>
+</mat-card>

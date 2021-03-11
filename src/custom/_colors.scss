@@ -1,0 +1,34 @@
+@import "~@angular/material/theming";
+
+$ETF-Explorer-primary: mat-palette($mat-green, 600);
+$ETF-Explorer-accent: mat-palette($mat-pink, A200, A100, A400);
+$ETF-Explorer-warn: mat-palette($mat-red);
+
+// Create the theme object. A theme consists of configurations for individual
+// theming systems such as "color" or "typography".
+$ETF-Explorer-theme: mat-dark-theme((
+  color: (
+    primary: $ETF-Explorer-primary,
+    accent: $ETF-Explorer-accent,
+    warn: $ETF-Explorer-warn,
+  )
+));
+
+$dark-foreground-palette: map-get($ETF-Explorer-theme, foreground);
+$dark-background-palette: map-get($ETF-Explorer-theme, background);
+
+$theme-primary: mat-color($ETF-Explorer-primary);
+$theme-accent: mat-color($ETF-Explorer-accent);
+$theme-warn: mat-color($ETF-Explorer-warn);
+$theme-foreground: mat-color($dark-foreground-palette);
+$theme-background: mat-color($dark-background-palette);
+
+// custom colors
+$custom-green: #1AB86A;
+$custom-red: #B22222;
+$custom-dark-grey: #313131;
+$custom-medium-grey: #525252;
+$custom-light-grey: #BDBDBD;
+$dark-orchid: #A42CD6;
+$han-purple: #5438DC;
+$azure-blue: #357DED;

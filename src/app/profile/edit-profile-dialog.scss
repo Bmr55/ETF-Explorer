@@ -1,0 +1,76 @@
+@import '../../custom/colors';
+
+table > tr > td{
+    text-align: center;
+    margin: 10px auto;
+}
+
+.mat-form-field {
+    margin: 15px;
+    
+}
+
+.single-form-field {
+    width: 55%;
+}
+
+.double-form-field {
+    width: 75%;
+}
+
+.mat-dialog-title {
+    text-align: center !important;
+}
+
+.mat-dialog-actions {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row; 
+}
+
+.mat-dialog-actions > button {
+    width: 40%;
+}
+
+/** Overrides caret & text color **/
+.mat-form-field-appearance-legacy .mat-input-element {
+    caret-color: white;
+}
+
+// #name-input:-internal-autofill-selected {
+//     background-color: red !important;
+//     color: blue !important;
+// }
+
+#edit-profile-form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+#dialog-save-btn {
+    background-color: $theme-primary;
+}
+
+#dialog-cancel-btn {
+    background-color: $theme-warn;
+}
+
+  /* Input */
+  
+// input {
+//     font-size: 14px;
+//     padding: 8px;
+// }
+  
+// label {
+//     font-size: 12px;
+//     font-weight: bold;
+//     margin-bottom: 4px;
+//     display: block;
+//     text-transform: uppercase;
+//  }
+
+
