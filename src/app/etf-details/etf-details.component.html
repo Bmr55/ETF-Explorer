@@ -1,0 +1,79 @@
+<h2>{{ etf.name }}</h2>
+
+<mat-tab-group mat-align-tabs="center">
+    <mat-tab label="Details">
+        <mat-card class="etf-card">
+            <mat-card-content>
+                <mat-list>
+                    <mat-list-item>
+                        <h4>Symbol:</h4> &nbsp; <p>{{etf.symbol}}</p>
+                    </mat-list-item>
+                    <mat-divider></mat-divider>
+                    <mat-list-item>
+                        <h4>Category:</h4> &nbsp; <p>{{etf.category}}</p>
+                    </mat-list-item>
+                    <mat-divider></mat-divider>
+                    <mat-list-item>
+                        <h4>Price:</h4> &nbsp; <p>${{etf.price}}</p>
+                    </mat-list-item>
+                    <mat-divider></mat-divider>
+                    <mat-list-item>
+                        <h4>Expense Ratio:</h4> &nbsp; <p>{{etf.expense_ratio}}</p>
+                    </mat-list-item>
+                    <mat-divider></mat-divider>
+                    <mat-list-item>
+                        <h4>Number of Stocks:</h4> &nbsp; <p>{{etf.number_of_stocks}}</p>
+                    </mat-list-item>
+                    <mat-divider></mat-divider>
+                    <mat-list-item>
+                        <h4>Net Assets:</h4> &nbsp; <p>{{etf.total_assets}}</p>
+                    </mat-list-item>
+                    <mat-divider></mat-divider>
+                  </mat-list>
+            </mat-card-content>
+            <mat-card-footer>
+                <button mat-raised-button [color]="watchBtnThemeColor" [ngClass]="[watchBtnStyle]" (click)="addToWatchlist()">{{ watchBtnText }}</button>
+            </mat-card-footer>
+            
+        </mat-card>
+        
+    </mat-tab>
+    <mat-tab [label]=allocationLabel>
+        <table mat-table [dataSource]="allocationDataSource" class="mat-elevation-z8" fixedLayout=false>
+          
+            <!-- Name Column -->
+            <ng-container matColumnDef="name">
+              <th mat-header-cell *matHeaderCellDef> {{allocationColumnName}} </th>
+              <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+            </ng-container>
+          
+            <!-- Percent Column -->
+            <ng-container matColumnDef="percent">
+              <th mat-header-cell *matHeaderCellDef> Allocation </th>
+              <td mat-cell *matCellDef="let element"> {{element.percent}}% </td>
+            </ng-container>
+                    
+            <tr mat-header-row *matHeaderRowDef="allocationDisplayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: allocationDisplayedColumns;"></tr>
+          </table>
+    </mat-tab>
+    <mat-tab label="Largest Holdings">
+        <table mat-table [dataSource]="holdingsDataSource" class="mat-elevation-z8">
+
+            <!-- Percent Column -->
+            <ng-container matColumnDef="number">
+                <th mat-header-cell *matHeaderCellDef> No. </th>
+                <td mat-cell *matCellDef="let element; let i = index"> {{i + 1}} </td>
+              </ng-container>
+          
+            <!-- Name Column -->
+            <ng-container matColumnDef="name">
+              <th mat-header-cell *matHeaderCellDef> Company </th>
+              <td mat-cell *matCellDef="let element"> {{element}} </td>
+            </ng-container>
+                              
+            <tr mat-header-row *matHeaderRowDef="holdingsDisplayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: holdingsDisplayedColumns;"></tr>
+          </table>
+    </mat-tab>
+</mat-tab-group>

@@ -12,7 +12,8 @@
 // Define the palettes for your theme using the Material Design palettes available in palette.scss
 // (imported above). For each palette, you can optionally specify a default, lighter, and darker
 // hue. Available color palettes: https://material.io/design/color/
-$ETF-Explorer-primary: mat-palette($mat-indigo);
+
+$ETF-Explorer-primary: mat-palette($mat-green, A700);
 $ETF-Explorer-accent: mat-palette($mat-pink, A200, A100, A400);
 
 // The warn palette is optional (defaults to red).
@@ -34,6 +35,13 @@ $ETF-Explorer-theme: mat-light-theme((
 @include angular-material-theme($ETF-Explorer-theme);
 
 /* You can add global styles to this file, and also import other style files */
+
+// custom colors
+$etf-explorer-green: "#1AB86A"; 
+$etf-explorer-dark-orchid: "#A42CD6";
+$etf-explorer-han-purple: "#5438DC";
+$etf-explorer-azure-blue: "#357DED";
+$etf-explorer-red: "#B22222";
 
 * {
     font-family: 'Roboto', Arial, sans-serif;
@@ -75,12 +83,12 @@ a:hover {
 app-top-bar {
     width: 100%;
     height: 68px;
-    background-color: #1ab86a;
     padding: 16px;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
+    background-color: mat-color($ETF-Explorer-primary);
 }
   
 app-top-bar h1 {
@@ -91,6 +99,38 @@ app-top-bar h1 {
 
 app-top-bar > a > i {
       font-size: 45px !important;
+}
+
+/* Card */
+
+mat-card {
+    background-color: #525252 !important;
+    padding-top: 0;
+    padding-bottom: 0;
+    width: 95%;
+    margin: 10px auto;
+}
+
+mat-card-title {
+    text-align: center;
+}
+
+mat-card-content {
+    margin-bottom: 0;
+}
+
+mat-card-footer {
+    justify-content: center;
+    text-align: center;
+    padding-bottom: 5px;
+}
+
+table {
+    background-color: #525252 !important;
+}
+
+.mat-list-item-content {
+    justify-content: center;
 }
 
 html, body { height: 100%; }
