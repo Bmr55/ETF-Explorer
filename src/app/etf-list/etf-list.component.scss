@@ -1,14 +1,30 @@
 h2 {
     text-align: center;
-    font-size: 30px;
+    font-size: 25px;
 }
 
 .etf-card {
 
-    width: 75% !important;
+    width: 95% !important;
+    text-align: center;
+    margin: 0;
+}
+
+.etf-card > mat-card-title {
+    color: white !important;
+
+}
+
+a {
+    font-size: 20px;
+}
+
+p {
+    margin: 0;
+    font-size: 16px;
     text-align: center;
 }
 
-.etf-card > mat-card-content {
-    color: white !important;
+mat-card-title > a:hover {
+    text-decoration: underline;
 }

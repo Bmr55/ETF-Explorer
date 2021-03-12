@@ -1,8 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
-import { etfs } from '../etfs';
-// import { WatchlistService } from '../watchlist.service';
+import { MatDialog, MatDialogConfig } from "@angular/material/dialog";
+import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
+
+import { ExchangeTradedFund, ETFAllocation, ETF, etfs } from '../etfs';
+import { WatchlistService } from '../watchlist.service';
 
 @Component({
     selector: 'app-etf-details',
@@ -22,13 +25,13 @@ export class ETFDetailsComponent implements OnInit {
     holdingsDisplayedColumns: string[] = ['number', "name"]
 
     etfWatched: boolean = false;
-    watchBtnStyle: string = "watchlist-btn add-btn";
     watchBtnText: string = "Add to Watchlist";
     watchBtnThemeColor: string = "primary";
 
     constructor(
         private route: ActivatedRoute, 
-        //private watchlistService: WatchlistService
+        private watchlistService: WatchlistService,
+        public dialog: MatDialog
         ) { }
 
     ngOnInit() {
@@ -37,37 +40,100 @@ export class ETFDetailsComponent implements OnInit {
         const etfSymbolFromRoute = String(routeParams.get('etfId'));
       
         // Find the etf that correspond with the symbol provided in route.
-        this.etf = etfs.find(etf => etf.symbol === etfSymbolFromRoute);
+        let foundObj = etfs.find(etf => etf.symbol === etfSymbolFromRoute);
+
+        if(foundObj) {
+            let etfAllocation: ETFAllocation[] = [];
+
+            foundObj.allocation.forEach(function(item: any){
+                etfAllocation.push(new ETFAllocation(item.name, item.percent));
+            });
+    
+            this.etf = new ExchangeTradedFund(
+                foundObj.symbol,
+                foundObj.name,
+                foundObj.category,
+                foundObj.price,
+                foundObj.expense_ratio,
+                foundObj.total_assets,
+                foundObj.description,
+                foundObj.link,
+                foundObj.number_of_stocks,
+                foundObj.largest_holdings,
+                etfAllocation,
+                foundObj.allocation_type
+            );
+        }
 
         this.holdingsDataSource = this.etf.largest_holdings;
 
-        if(this.etf.sector_allocation) {
+        if(this.etf.allocation_type == "sector") {
             this.allocationLabel = 'Sector Allocation';
-            this.allocationDataSource = this.etf.sector_allocation;
+            this.allocationDataSource = this.etf.allocation;
             this.allocationColumnName = 'Sector';
-        } else if(this.etf.region_allocation) {
+        } else if(this.etf.allocation_type == "region") {
             this.allocationLabel = 'Region Allocation';
-            this.allocationDataSource = this.etf.region_allocation;
+            this.allocationDataSource = this.etf.allocation;
             this.allocationColumnName = 'Region';
+        }
+
+        if(this.watchlistService.contains(etfSymbolFromRoute)) {
+            this.etfWatched = true;
+            this.watchBtnThemeColor = "warn";
+            this.watchBtnText = "Remove from Watchlist";
+        } else {
+            this.etfWatched = false;
+            this.watchBtnThemeColor = "primary";
+            this.watchBtnText = "Add to Watchlist";
         }
       }
 
-      addToWatchlist() {
+      toggleWatchlist() {
           if(this.etfWatched) {
               this.etfWatched = false;
-              this.watchBtnStyle = "watchlist-btn";
               this.watchBtnThemeColor = "primary";
               this.watchBtnText = "Add to Watchlist";
-              //this.watchlistService.removeFromWatchlist(this.etf);
+              this.watchlistService.removeFromWatchlist(this.etf);
           } else {
               this.etfWatched = true;
-              this.watchBtnStyle = "watchlist-btn";
               this.watchBtnThemeColor = "warn";
               this.watchBtnText = "Remove from Watchlist";
-              //this.watchlistService.addToWatchlist(this.etf);
+              this.watchlistService.addToWatchlist(this.etf);
           }
 
           //console.log(this.watchlistService.getWatchlist());
 
       }
+
+      viewDescription(): void {
+        const dialogRef = this.dialog.open(ETFDescriptionDialog, {
+          width: '75%',
+          data: this.etf.description});
+    
+          dialogRef.afterClosed().subscribe(result => {
+            //console.log('The dialog was closed');
+          });
+    
+      }
+  }
+
+@Component({
+    selector: 'etf-description-dialog',
+    templateUrl: 'etf-description-dialog.html',
+    styleUrls: ['etf-description-dialog.scss']
+  })
+  export class ETFDescriptionDialog {
+  
+    description: string;
+  
+    constructor(
+      public dialogRef: MatDialogRef<ETFDescriptionDialog>,
+      @Inject(MAT_DIALOG_DATA) public data: string) {
+        this.description = data;
+      }
+  
+    onCancelClick(): void {
+      this.dialogRef.close();
+    }
+  
   }

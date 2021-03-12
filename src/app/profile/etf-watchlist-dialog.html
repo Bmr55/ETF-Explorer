@@ -1,0 +1,29 @@
+<mat-card>
+    <mat-card-title> ETF Watchlist </mat-card-title>
+    <mat-divider></mat-divider>
+    <mat-card-content>
+        <mat-list *ngIf="watchlist.length == 0">
+            <mat-list-item>
+                Empty
+            </mat-list-item>
+            <mat-divider></mat-divider>
+
+        </mat-list>
+        <mat-list *ngFor="let etf of watchlist">
+            <mat-list-item *ngIf="!editing">
+                <a [routerLink]="['/etfs', etf.symbol]" (click)="onCancelClick()"> {{ etf.name }} ({{ etf.symbol }}) </a>
+            </mat-list-item>
+            <mat-list-item *ngIf="editing" class="editing-watchlist">
+                {{ etf.name }} ({{ etf.symbol }}) &nbsp; <a (click)="remove(etf.symbol)"><i class="material-icons">delete_outline</i></a>
+            </mat-list-item>
+            <mat-divider></mat-divider>
+
+        </mat-list>
+    </mat-card-content>
+    <mat-card-footer>
+        <button *ngIf="!editing" mat-raised-button color=primary class="watchlist-btn" (click)="editWatchlist()" [disabled]="emptyWatchlist">Edit</button>
+        <button *ngIf="editing" mat-raised-button color=accent class="watchlist-btn" (click)="stopEditingWatchlist()" >Done</button>
+        <button mat-raised-button color=warn class="watchlist-btn" (click)="onCancelClick()">Close</button>
+    </mat-card-footer>
+</mat-card>
+

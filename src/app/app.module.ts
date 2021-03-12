@@ -19,8 +19,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { TopBarComponent } from './top-bar/top-bar.component';
 import { ETFListComponent } from './etf-list/etf-list.component';
-import { ETFDetailsComponent } from './etf-details/etf-details.component';
-import { ProfileComponent, EditProfileDialog } from './profile/profile.component'
+import { ETFDetailsComponent, ETFDescriptionDialog } from './etf-details/etf-details.component';
+import { ProfileComponent, EditProfileDialog, ETFWatchlistDialog } from './profile/profile.component'
 
 @NgModule({
   imports: [
@@ -46,8 +46,10 @@ import { ProfileComponent, EditProfileDialog } from './profile/profile.component
     TopBarComponent,
     ETFListComponent,
     ETFDetailsComponent,
+    ETFDescriptionDialog,
     ProfileComponent,
-    EditProfileDialog
+    EditProfileDialog,
+    ETFWatchlistDialog
   ],
   providers: [],
   bootstrap: [AppComponent]

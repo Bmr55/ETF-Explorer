@@ -1,3 +1,79 @@
+export interface ETF {
+  symbol: string;
+  name: string;
+  category: string;
+  price: number;
+  expense_ratio: string;
+  total_assets: string;
+  description: string;
+  link: string;
+  number_of_stocks: number;
+  largest_holdings: string[];
+  allocation: Allocation[];
+  allocation_type: string;
+}
+
+export interface Allocation {
+  name: string;
+  percent: number;
+}
+
+export class ExchangeTradedFund implements ETF {
+  symbol: string;
+  name: string;
+  category: string;
+  price: number;
+  expense_ratio: string;
+  total_assets: string;
+  description: string;
+  link: string;
+  number_of_stocks: number;
+  largest_holdings: string[];
+  allocation: ETFAllocation[];
+  allocation_type: string;
+
+  constructor(
+    symbol: string,
+    name: string,
+    category: string,
+    price: number,
+    expense_ratio: string,
+    total_assets: string,
+    description: string,
+    link: string,
+    number_of_stocks: number,
+    largest_holdings: string[],
+    allocation: ETFAllocation[],
+    allocation_type: string) {
+
+      this.symbol = symbol;
+      this.name = name;
+      this.category = category;
+      this.price = price;
+      this.expense_ratio = expense_ratio;
+      this.total_assets = total_assets;
+      this.description = description;
+      this.link = link;
+      this.number_of_stocks = number_of_stocks;
+      this.largest_holdings = largest_holdings;
+      this.allocation = allocation;
+      this.allocation_type = allocation_type;
+  }
+}
+
+export class ETFAllocation implements Allocation {
+  name: string;
+  percent: number;
+
+  constructor(
+    name: string,
+    percent: number) {
+      this.name = name;
+      this.percent = percent;
+    }
+}
+
+
 export const etfs = [
     {
       symbol: "VOO",
@@ -21,7 +97,7 @@ export const etfs = [
         "JPMorgan Chase & Co.",
         "Visa Inc."
       ],
-      sector_allocation: [
+      allocation: [
         {
           "name": "Communication Services",
           "percent": 10.70
@@ -66,7 +142,8 @@ export const etfs = [
           "name": "Utilities",
           "percent": 2.70
         }
-      ]
+      ],
+      allocation_type: "sector"
     },
     {
       symbol: "VTI",
@@ -90,7 +167,7 @@ export const etfs = [
         "JPMorgan Chase & Co.",
         "Visa Inc."
       ],
-      sector_allocation: [
+      allocation: [
         {
           "name": "Basic Materials",
           "percent": 1.90
@@ -135,7 +212,8 @@ export const etfs = [
           "name": "Utilities",
           "percent": 2.90
         }
-      ]
+      ],
+      allocation_type: "sector"
     },
     {
       symbol: "VT",
@@ -159,7 +237,7 @@ export const etfs = [
         "Alibaba Group Holding Ltd.",
         "Berkshire Hathaway Inc."
       ],
-      region_allocation: [
+      allocation: [
         {
           "name": "North America",
           "percent": 59.10
@@ -184,7 +262,8 @@ export const etfs = [
           "name": "Other",
           "percent": 0.20
         }
-      ]      
+      ],
+      allocation_type: "region"      
     },
     {
       symbol: "VYM",
@@ -208,7 +287,7 @@ export const etfs = [
         "Pfizer Inc.",
         "Walmart Inc."
       ],
-      sector_allocation: [
+      allocation: [
         {
           "name": "Basic Materials",
           "percent": 3.80
@@ -249,7 +328,8 @@ export const etfs = [
           "name": "Utilities",
           "percent": 8.80
         }
-      ]
+      ],
+      allocation_type: "sector"
     },
     {
       symbol: "VUG",
@@ -273,7 +353,7 @@ export const etfs = [
         "Home Depot Inc.",
         "Mastercard Inc."
       ],
-      sector_allocation: [
+      allocation: [
         {
           "name": "Basic Materials",
           "percent": 1.30
@@ -318,7 +398,8 @@ export const etfs = [
           "name": "Utilities",
           "percent": 0.10
         }
-      ]
+      ],
+      allocation_type: "sector"
     },
     {
       symbol: "VV",
@@ -342,7 +423,7 @@ export const etfs = [
         "JPMorgan Chase & Co.",
         "Visa Inc."
       ],
-      sector_allocation: [
+      allocation: [
         {
           "name": "Basic Materials",
           "percent": 1.70
@@ -387,7 +468,8 @@ export const etfs = [
           "name": "Utilities",
           "percent": 3.30
         }
-      ]
+      ],
+      allocation_type: "sector"
     },
     {
       symbol: "VTV",
@@ -411,7 +493,7 @@ export const etfs = [
         "Verizon Communications Inc.",
         "Comcast Corp."
       ],
-      sector_allocation: [
+      allocation: [
         {
           "name": "Basic Materials",
           "percent": 2.20
@@ -456,6 +538,7 @@ export const etfs = [
           "name": "Utilities",
           "percent": 6.60
         }
-      ]
+      ],
+      allocation_type: "sector"
     }
   ];

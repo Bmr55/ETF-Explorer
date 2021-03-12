@@ -32,7 +32,8 @@
                   </mat-list>
             </mat-card-content>
             <mat-card-footer>
-                <button mat-raised-button [color]="watchBtnThemeColor" [ngClass]="[watchBtnStyle]" (click)="addToWatchlist()">{{ watchBtnText }}</button>
+                <button mat-raised-button color="primary" class="custom-btn" (click)="viewDescription()">View Description</button>
+                <button mat-raised-button [color]="watchBtnThemeColor" class="custom-btn" (click)="toggleWatchlist()">{{ watchBtnText }}</button>
             </mat-card-footer>
             
         </mat-card>

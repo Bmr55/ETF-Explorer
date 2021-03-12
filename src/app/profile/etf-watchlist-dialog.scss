@@ -1,0 +1,33 @@
+@import '../../custom/colors';
+
+.mat-card {
+    box-shadow: none;
+    padding: 0;
+}
+
+.mat-dialog-container {
+    padding: 10px;
+}
+
+.mat-card-title {
+    margin-bottom: 15px;
+}
+
+.mat-card-footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row; 
+}
+
+.mat-card-footer > button {
+    width: 40%;
+    margin: 5px;
+}
+
+.editing-watchlist > a{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}

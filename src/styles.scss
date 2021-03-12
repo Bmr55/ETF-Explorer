@@ -118,7 +118,15 @@ mat-card-footer {
     justify-content: center;
     text-align: center;
     padding-bottom: 5px;
+    display: flex !important;
+    flex-direction: column;
+    align-items: center;
 }
+
+// .cdk-overlay-pane {
+//     max-width: 95% !important;
+//     width: 95% !important;
+// }
 
 // table {
 //     background-color: $custom-medium-grey !important;

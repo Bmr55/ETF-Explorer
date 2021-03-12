@@ -4,7 +4,8 @@ import { ActivatedRoute } from '@angular/router';
 import { MatDialog, MatDialogConfig } from "@angular/material/dialog";
 import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
 
-import { etfs } from '../etfs';
+import { ETF, etfs } from '../etfs';
+import { WatchlistService } from '../watchlist.service';
 
 export interface ProfileData {
   name: string;
@@ -22,7 +23,11 @@ export class ProfileComponent implements OnInit {
   etfs = etfs;
   profile: ProfileData;
 
-  constructor(public dialog: MatDialog, private route: ActivatedRoute) {
+  constructor(
+    public dialog: MatDialog, 
+    private route: ActivatedRoute,
+    private watchlistService: WatchlistService
+    ) {
     this.profile = {
       "name": "",
       "age": "",
@@ -40,18 +45,25 @@ export class ProfileComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-      console.log('Result: ' + result);
+      //console.log('The dialog was closed');
 
       if(result != undefined) {
-        console.log('The result was not undefined');
-        console.log("Name: " + result.name);
         this.profile = result;
       } else {
-        console.log('The result was undefined');
       }
       
     });
+  }
+
+  viewWatchlist(): void {
+    const dialogRef = this.dialog.open(ETFWatchlistDialog, {
+      width: '75%',
+      data: this.watchlistService.getWatchlist()});
+
+      dialogRef.afterClosed().subscribe(result => {
+        //console.log('The dialog was closed');
+      });
+
   }
 
 }
@@ -80,6 +92,52 @@ export class EditProfileDialog {
 
   onCancelClick(): void {
     this.dialogRef.close(this.currentProfileData);
+  }
+
+}
+
+@Component({
+  selector: 'etf-watchlist-dialog',
+  templateUrl: 'etf-watchlist-dialog.html',
+  styleUrls: ['etf-watchlist-dialog.scss']
+})
+export class ETFWatchlistDialog {
+
+  watchlist: ETF[];
+  emptyWatchlist: boolean;
+  editing: boolean;
+
+  constructor(
+    public dialogRef: MatDialogRef<ETFWatchlistDialog>,
+    private watchlistService: WatchlistService,
+    @Inject(MAT_DIALOG_DATA) public data: ETF[]) {
+      this.watchlist = data;
+      this.editing = false;
+      if(this.watchlist.length < 1) {
+        this.emptyWatchlist = true;
+      } else {
+        this.emptyWatchlist = false;
+      }
+    }
+
+    editWatchlist() {
+      this.editing = true;
+    }
+
+    stopEditingWatchlist() {
+      this.editing = false;
+    }
+
+    remove(symbol: string) {
+      this.watchlistService.removeFromWatchlistBySymbol(symbol);
+
+      if(this.watchlist.length < 1) {
+        this.emptyWatchlist = true;
+      }
+    }
+
+  onCancelClick(): void {
+    this.dialogRef.close();
   }
 
 }

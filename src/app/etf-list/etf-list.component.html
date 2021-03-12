@@ -1,17 +1,16 @@
 <h2>Exchange Traded Funds</h2>
+<p>(Click ETF for details)</p>
+<br>
 
 <mat-grid-list cols="1" rowHeight="5rem">
 
     <mat-grid-tile class="etf-grid-tile" *ngFor="let etf of etfs">
         <mat-card class="etf-card">
             <mat-card-title>
-                <a [title]="etf.symbol + ' Details'" [routerLink]="['/etfs', etf.symbol]">
-                    {{ etf.name }} ({{ etf.symbol }})
+                <a [title]="etf.description" [routerLink]="['/etfs', etf.symbol]">
+                    {{ etf.name }} <p> ({{ etf.symbol }}) </p>
                 </a>
             </mat-card-title>
-            <mat-card-content>
-                {{ etf.description }}
-            </mat-card-content>
         </mat-card>
         <br>
     </mat-grid-tile>
