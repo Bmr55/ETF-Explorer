@@ -59,6 +59,29 @@ export class ExchangeTradedFund implements ETF {
       this.allocation = allocation;
       this.allocation_type = allocation_type;
   }
+
+  static createExchangeTradedFund(obj: any): ExchangeTradedFund {
+    let etfAllocation: ETFAllocation[] = [];
+
+    obj.allocation.forEach(function(item: any){
+        etfAllocation.push(new ETFAllocation(item.name, item.percent));
+    });
+
+    return new ExchangeTradedFund(
+        obj.symbol,
+        obj.name,
+        obj.category,
+        obj.price,
+        obj.expense_ratio,
+        obj.total_assets,
+        obj.description,
+        obj.link,
+        obj.number_of_stocks,
+        obj.largest_holdings,
+        etfAllocation,
+        obj.allocation_type
+    );    
+  }
 }
 
 export class ETFAllocation implements Allocation {
@@ -72,7 +95,6 @@ export class ETFAllocation implements Allocation {
       this.percent = percent;
     }
 }
-
 
 export const etfs = [
     {

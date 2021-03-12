@@ -6,6 +6,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
 
 import { ETF, etfs } from '../etfs';
 import { WatchlistService } from '../watchlist.service';
+import { ProfileService, Profile } from '../profile.service';
 
 export interface ProfileData {
   name: string;
@@ -21,19 +22,15 @@ export interface ProfileData {
 })
 export class ProfileComponent implements OnInit {
   etfs = etfs;
-  profile: ProfileData;
+  profile: Profile;
 
   constructor(
     public dialog: MatDialog, 
     private route: ActivatedRoute,
-    private watchlistService: WatchlistService
+    private watchlistService: WatchlistService,
+    private profileService: ProfileService
     ) {
-    this.profile = {
-      "name": "",
-      "age": "",
-      "country": "",
-      "risk": ""
-    }
+    this.profile = profileService.getProfile();
   }
 
   ngOnInit() {}
@@ -48,9 +45,13 @@ export class ProfileComponent implements OnInit {
       //console.log('The dialog was closed');
 
       if(result != undefined) {
-        this.profile = result;
-      } else {
+        this.profileService.updateName(result.name);
+        this.profileService.updateAge(result.age);
+        this.profileService.updateCountry(result.country);
+        this.profileService.updateRisk(result.risk);
       }
+
+      this.profile = this.profileService.getProfile();
       
     });
   }

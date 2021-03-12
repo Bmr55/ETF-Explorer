@@ -4,7 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { MatDialog, MatDialogConfig } from "@angular/material/dialog";
 import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
 
-import { ExchangeTradedFund, ETFAllocation, ETF, etfs } from '../etfs';
+import { ExchangeTradedFund, etfs } from '../etfs';
 import { WatchlistService } from '../watchlist.service';
 
 @Component({
@@ -43,26 +43,7 @@ export class ETFDetailsComponent implements OnInit {
         let foundObj = etfs.find(etf => etf.symbol === etfSymbolFromRoute);
 
         if(foundObj) {
-            let etfAllocation: ETFAllocation[] = [];
-
-            foundObj.allocation.forEach(function(item: any){
-                etfAllocation.push(new ETFAllocation(item.name, item.percent));
-            });
-    
-            this.etf = new ExchangeTradedFund(
-                foundObj.symbol,
-                foundObj.name,
-                foundObj.category,
-                foundObj.price,
-                foundObj.expense_ratio,
-                foundObj.total_assets,
-                foundObj.description,
-                foundObj.link,
-                foundObj.number_of_stocks,
-                foundObj.largest_holdings,
-                etfAllocation,
-                foundObj.allocation_type
-            );
+          this.etf = ExchangeTradedFund.createExchangeTradedFund(foundObj);
         }
 
         this.holdingsDataSource = this.etf.largest_holdings;
